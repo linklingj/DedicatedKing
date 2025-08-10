@@ -2,6 +2,6 @@ using UnityEngine;
 
 public class HeroSkillE : HeroSkill
 {
-    //E½ºÅ³ ½ºÅ©¸³Æ®, HeroSkill Å¬·¡½º¸¦ »ó¼Ó ¹ŞÀ½
+    //EìŠ¤í‚¬ ìŠ¤í¬ë¦½íŠ¸, HeroSkill í´ë˜ìŠ¤ë¥¼ ìƒì† ë°›ìŒ
 
 }
