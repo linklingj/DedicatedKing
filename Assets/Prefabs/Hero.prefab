@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 237174390061208019}
   - component: {fileID: 5588297836778991438}
   - component: {fileID: 1382709857813537142}
+  - component: {fileID: 6709652907232907524}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -206,7 +207,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!65 &5949619510611684524
 BoxCollider:
@@ -264,17 +265,18 @@ MonoBehaviour:
   maxhp: 0
   userName: 
   jobName: 
-  trans: {fileID: 0}
-  rigid: {fileID: 0}
-  col: {fileID: 0}
-  ani: {fileID: 0}
-  cam: {fileID: 0}
+  trans: {fileID: 4754112588947756358}
+  rigid: {fileID: 5185048903500446149}
+  col: {fileID: 5949619510611684524}
+  ani: {fileID: 4257884302131468057}
+  cam: {fileID: 1181380832855336192}
   minimapIcon: {fileID: 7398807178393153746}
   canMove: 1
   canAttack: 1
   isJumping: 0
   isOnGround: 1
   isInvincible: 0
+  isMoving: 0
 --- !u!114 &885326277199925945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,7 +289,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b236d0f4aee0f34f950b16cca55a789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  moveSpeed: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  heroState: {fileID: 7772036744560986278}
 --- !u!114 &7924495501697540399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,6 +368,20 @@ MonoBehaviour:
   skillDamage: 0
   skillCoolTime: 0
   canUse: 0
+--- !u!114 &6709652907232907524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6467157488262079371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e589da9e070dc864ea64f5e438fd21e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverConfig: {fileID: 11400000, guid: 30fc633dd6547c04b9a40e821a1f71c3, type: 2}
+  playerId: ozeco
 --- !u!1 &7398807178393153746
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +537,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04c79b5f6e9ebab48af48fdcf7b6d570, type: 3}
+--- !u!95 &4257884302131468057 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9563318, guid: 04c79b5f6e9ebab48af48fdcf7b6d570, type: 3}
+  m_PrefabInstance: {fileID: 4257884302141029295}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4257884302141059281 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 494462, guid: 04c79b5f6e9ebab48af48fdcf7b6d570, type: 3}
