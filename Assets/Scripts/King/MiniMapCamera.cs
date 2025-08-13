@@ -5,34 +5,34 @@ using UnityEngine.LightTransport;
 public class MiniMapCamera : MonoBehaviour, IDragHandler, IPointerDownHandler
 {
     #region inputValue
-    public Camera minimapCamera;      // ¹Ì´Ï¸Ê¿ë Ä«¸Þ¶ó
-    public Camera mainCamera;         // ½ÇÁ¦ ¸ÞÀÎ Ä«¸Þ¶ó
-    public RectTransform minimapRect; // RawImageÀÇ RectTransform
-    public Vector2 cameraWorldMin;    // Ä«¸Þ¶ó°¡ ºñÃß´Â ¿ùµå ÃÖ¼Ò ÁÂÇ¥ (ÁÂÇÏ´Ü)
-    public Vector2 cameraWorldMax;    // Ä«¸Þ¶ó°¡ ºñÃß´Â ¿ùµå ÃÖ´ë ÁÂÇ¥ (¿ì»ó´Ü)
-    public Vector2 miniMapworldMin;   // ¹Ì´Ï¸ÊÀÌ Ç¥½ÃÇÏ´Â ¿ùµå ÃÖ¼Ò ÁÂÇ¥ (ÁÂÇÏ´Ü)
-    public Vector2 miniMapworldMax;   // ¹Ì´Ï¸ÊÀÌ Ç¥½ÃÇÏ´Â ¿ùµå ÃÖ´ë ÁÂÇ¥ (¿ì»ó´Ü)
-    public Vector2 viewportMin;       // ¹Ì´Ï¸Ê viewport ÃÖ¼Ò ÁÂÇ¥ (ÁÂÇÏ´Ü)
-    public Vector2 viewportMax;       // ¹Ì´Ï¸ÊÀÌ viewport ÃÖ´ë ÁÂÇ¥ (¿ì»ó´Ü)
-    public Transform mainCameraTransform; // ¸ÞÀÎ Ä«¸Þ¶ó Transform
-    public RectTransform viewportTransform;   // ½Ã¾ß Ç¥½Ã Transform;
+    public Camera minimapCamera;      // ï¿½Ì´Ï¸Ê¿ï¿½ Ä«ï¿½Þ¶ï¿½
+    public Camera mainCamera;         // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½
+    public RectTransform minimapRect; // RawImageï¿½ï¿½ RectTransform
+    public Vector2 cameraWorldMin;    // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ß´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ ï¿½ï¿½Ç¥ (ï¿½ï¿½ï¿½Ï´ï¿½)
+    public Vector2 cameraWorldMax;    // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ß´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Ç¥ (ï¿½ï¿½ï¿½ï¿½)
+    public Vector2 miniMapworldMin;   // ï¿½Ì´Ï¸ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ ï¿½ï¿½Ç¥ (ï¿½ï¿½ï¿½Ï´ï¿½)
+    public Vector2 miniMapworldMax;   // ï¿½Ì´Ï¸ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Ç¥ (ï¿½ï¿½ï¿½ï¿½)
+    public Vector2 viewportMin;       // ï¿½Ì´Ï¸ï¿½ viewport ï¿½Ö¼ï¿½ ï¿½ï¿½Ç¥ (ï¿½ï¿½ï¿½Ï´ï¿½)
+    public Vector2 viewportMax;       // ï¿½Ì´Ï¸ï¿½ï¿½ï¿½ viewport ï¿½Ö´ï¿½ ï¿½ï¿½Ç¥ (ï¿½ï¿½ï¿½ï¿½)
+    public Transform mainCameraTransform; // ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ Transform
+    public RectTransform viewportTransform;   // ï¿½Ã¾ï¿½ Ç¥ï¿½ï¿½ Transform;
     #endregion
     PointerEventData pointerEventData;
-    public bool activate = true; // Á¤ÁöÇÏ·Á¸é false·Î ¹Ù²Ù¼À
+    public bool activate = true; // ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ falseï¿½ï¿½ ï¿½Ù²Ù¼ï¿½
 
     void Start()
     {
-        //------Ä«¸Þ¶ó ÃÊ±â À§Ä¡------
+        //------Ä«ï¿½Þ¶ï¿½ ï¿½Ê±ï¿½ ï¿½ï¿½Ä¡------
         float worldX = 0f;
         float worldZ = 0f;
-        float height = mainCameraTransform.position.y; // ¸ÞÀÎ Ä«¸Þ¶ó ³ôÀÌ
-        float angle = 90 - mainCameraTransform.eulerAngles.x; // ¶¥°ú ¼öÁ÷ÀÎ Á÷¼±°ú ¸ÞÀÎ Ä«¸Þ¶ó°¡ º¸´Â ¹æÇâ »çÀÌ °¢µµ
+        float height = mainCameraTransform.position.y; // ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½
+        float angle = 90 - mainCameraTransform.eulerAngles.x; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         //Debug.Log(height);
         //Debug.Log(angle);
         //Debug.Log(height / Mathf.Tan(angle));
-        worldZ = worldZ - height / Mathf.Tan(angle); // ÅºÁ¨Æ® °è»êÀ¸·Î ZÃà º¸Á¤
+        worldZ = worldZ - height / Mathf.Tan(angle); // Åºï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Zï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        // ¸ÞÀÎ Ä«¸Þ¶ó ÀÌµ¿
+        // ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½Ìµï¿½
         Vector3 newCameraPos = new Vector3(worldX, mainCameraTransform.position.y, worldZ);
         mainCamera.transform.position = newCameraPos;
         //--------------------------
@@ -50,35 +50,35 @@ public class MiniMapCamera : MonoBehaviour, IDragHandler, IPointerDownHandler
 
     private void MouseOn(PointerEventData eventData)
     {
-        if (!activate) { return; } // ±â´É ¾È¾µ ¶§ ¸®ÅÏ
+        if (!activate) { return; } // ï¿½ï¿½ï¿½ ï¿½È¾ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        Vector2 localCursor; // Å¬¸¯ÇÑ ÁöÁ¡ÀÇ ³»ºÎÀÇ »ó´ë ÁÂÇ¥¸¦ ´ã´Â º¯¼ö
+        Vector2 localCursor; // Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(minimapRect, eventData.position, eventData.pressEventCamera, out localCursor))
-            return; // Å¬¸¯ÇÑ °÷ÀÌ ¹Ì´Ï¸Ê À§¶ó¸é ³»ºÎÀÇ ÁÂÇ¥°è·Î º¯È¯ ÇØÁÜ, ½ÇÆÐÇÏ¸é ¸®ÅÏ
+            return; // Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì´Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        // viewport À§Ä¡ Á¶Á¤
-        RectTransform parentRect = viewportTransform.parent as RectTransform; //ºÎ¸ðÀÇ RectTransform
+        // viewport ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
+        RectTransform parentRect = viewportTransform.parent as RectTransform; //ï¿½Î¸ï¿½ï¿½ï¿½ RectTransform
         Vector2 localPos;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, eventData.position, eventData.pressEventCamera, out localPos))
         {
-            // viewport ¹üÀ§ Á¦ÇÑ
+            // viewport ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             localPos.x = Mathf.Clamp(localPos.x, viewportMin.x, viewportMax.x);
             localPos.y = Mathf.Clamp(localPos.y, viewportMin.y, viewportMax.y);
             viewportTransform.anchoredPosition = localPos;
         }
 
-        // Áß½ÉÀÌ (0,0)ÀÎ ÁÂÇ¥¸¦ Áß½ÉÀÌ (0.5,0.5)ÀÎ ÁÂÇ¥·Î ¹Ù²ã ÁÜ
+        // ï¿½ß½ï¿½ï¿½ï¿½ (0,0)ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ß½ï¿½ï¿½ï¿½ (0.5,0.5)ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½
         Vector2 normalized = new Vector2(
             (localCursor.x / minimapRect.rect.width) + 0.5f,
             (localCursor.y / minimapRect.rect.height) + 0.5f
         );
 
-        // Á¤±ÔÈ­ ÁÂÇ¥¸¦ ¿ùµå ÁÂÇ¥·Î º¯È¯
-        float worldX = Mathf.Lerp(miniMapworldMin.x, miniMapworldMax.x, normalized.x); // X ¿ùµå ÁÂÇ¥
-        float worldZ = Mathf.Lerp(miniMapworldMin.y, miniMapworldMax.y, normalized.y); // Z ¿ùµå ÁÂÇ¥
+        // ï¿½ï¿½ï¿½ï¿½È­ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½È¯
+        float worldX = Mathf.Lerp(miniMapworldMin.x, miniMapworldMax.x, normalized.x); // X ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥
+        float worldZ = Mathf.Lerp(miniMapworldMin.y, miniMapworldMax.y, normalized.y); // Z ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥
         Debug.Log("CLickPosition : (" + worldX + ", " + worldZ + ")");
 
-        // X,ZÁÂÇ¥ ÃÖ´ë ÃÖ¼Ò º¸Á¤
+        // X,Zï¿½ï¿½Ç¥ ï¿½Ö´ï¿½ ï¿½Ö¼ï¿½ ï¿½ï¿½ï¿½ï¿½
         worldX = Mathf.Clamp(worldX, cameraWorldMin.x, cameraWorldMax.x);
         worldZ = Mathf.Clamp(worldZ, cameraWorldMin.y, cameraWorldMax.y);
         /*if(worldX > cameraWorldMax.x) worldX = cameraWorldMax.x;
@@ -87,15 +87,15 @@ public class MiniMapCamera : MonoBehaviour, IDragHandler, IPointerDownHandler
         else if(worldZ < cameraWorldMin.y) worldZ = cameraWorldMin.y;*/
         Debug.Log("ChangePosition : (" + worldX + ", " + worldZ + ")");
 
-        // Ä«¸Þ¶ó °¢¿¡ µû¸¥ Z ÁÂÇ¥ º¸Á¤
-        float height = mainCameraTransform.position.y; // ¸ÞÀÎ Ä«¸Þ¶ó ³ôÀÌ
-        float angle = 90 - mainCameraTransform.eulerAngles.x; // ¶¥°ú ¼öÁ÷ÀÎ Á÷¼±°ú ¸ÞÀÎ Ä«¸Þ¶ó°¡ º¸´Â ¹æÇâ »çÀÌ °¢µµ
+        // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Z ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
+        float height = mainCameraTransform.position.y; // ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½
+        float angle = 90 - mainCameraTransform.eulerAngles.x; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         //Debug.Log(height);
         //Debug.Log(angle);
         //Debug.Log(height / Mathf.Tan(angle));
-        worldZ = worldZ - height / Mathf.Tan(angle); // ÅºÁ¨Æ® °è»êÀ¸·Î ZÃà º¸Á¤
+        worldZ = worldZ - height / Mathf.Tan(angle); // Åºï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Zï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        // ¸ÞÀÎ Ä«¸Þ¶ó ÀÌµ¿
+        // ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½Ìµï¿½
         Vector3 newCameraPos = new Vector3(worldX, mainCameraTransform.position.y, worldZ);
         mainCamera.transform.position = newCameraPos;
     }
