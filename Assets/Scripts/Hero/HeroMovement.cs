@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,32 +11,13 @@ public class HeroMovement : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     [SerializeField] HeroState heroState;
 
-    InputAction rightClickAction;
-
-    void Awake()
-    {
-        rightClickAction = new InputAction(type: InputActionType.Button, binding: "<Mouse>/rightButton");
-        rightClickAction.Enable();
-    }
 
     void Start()
     {
         cam = heroState.cam;
         targetPos = heroState.transform.position;
     }
-
-    void Update() // ← 입력은 여기서!
-    {
-        if (rightClickAction.triggered || Mouse.current.rightButton.wasPressedThisFrame)
-        {
-            Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, groundLayer))
-            {
-                targetPos = hit.point;
-                heroState.isMoving = true;
-            }
-        }
-    }
+    
 
     void FixedUpdate()
     {
@@ -55,5 +37,14 @@ public class HeroMovement : MonoBehaviour
         heroState.rigid.linearVelocity = dir * moveSpeed;
     }
 
-    void OnDisable() => rightClickAction.Disable();
+
+    private void OnMove()
+    {
+        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, groundLayer))
+        {
+            targetPos = hit.point;
+            heroState.isMoving = true;
+        }
+    }
 }

@@ -7,11 +7,11 @@
             "actions": [
                 {
                     "name": "Move",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "35e53d49-7330-4a68-b1ad-dc1bda3c5c5f",
-                    "expectedControlType": "Vector3",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold,Press",
                     "initialStateCheck": true
                 },
                 {
