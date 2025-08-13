@@ -30,11 +30,11 @@ public class HeroMain : MonoBehaviour
             this.gameObject.AddComponent(typeof(HeroLevel));
             this.heroLevel = GetComponent<HeroLevel>();
         }
-        if (!TryGetComponent(out SkillHandler skillHandler))
-        {
-            this.gameObject.AddComponent(typeof(SkillHandler));
-            this.skillHandler = GetComponent<SkillHandler>();
-        }
+        // if (!TryGetComponent(out SkillHandler skillHandler))
+        // {
+        //     this.gameObject.AddComponent(typeof(SkillHandler));
+        //     this.skillHandler = GetComponent<SkillHandler>();
+        // }
         #endregion
         
         
