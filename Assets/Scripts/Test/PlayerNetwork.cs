@@ -1,12 +1,16 @@
 // <summary> Unity C# 스크립트 (플레이어 이동 전송 & 수신) </summary>
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
+using System.Collections.Concurrent;
+using MessagePack;
 using System.Threading;
 using UnityEngine;
 
 public class PlayerNetwork : MonoBehaviour
 {
+
+    // 메인 스레드에서 적용할 작업 큐
+    private readonly ConcurrentQueue<System.Action> _mainThread = new();
     [Header("Server")]
     public ServerConfig serverConfig;
 
@@ -32,20 +36,27 @@ public class PlayerNetwork : MonoBehaviour
 
     void Update()
     {
+        while (_mainThread.TryDequeue(out var work)) work();
         // 예시: 마우스 왼쪽 클릭시 이동
-        if (Input.GetMouseButton(0))
-        {
-            transform.position += moveSpeed * Time.deltaTime;
-            SendMove();
-        }
+        SendMove();
     }
 
     void SendMove()
     {
-        // "MOVE:{ID}:{x}:{y}:{z}"
-        var msg = $"MOVE:{playerId}:{transform.position.x:F2}:{transform.position.y:F2}:{transform.position.z:F2}";
-        var data = Encoding.UTF8.GetBytes(msg);
-        udp.SendAsync(data, data.Length, serverEndpoint);
+        var pos = transform.position;
+        // 소수 둘째 자리로 반올림(선택)
+        float rx = Mathf.Round(pos.x * 100f) / 100f;
+        float ry = Mathf.Round(pos.y * 100f) / 100f;
+        float rz = Mathf.Round(pos.z * 100f) / 100f;
+
+        var packet = new DataPacket() {
+            id = playerId,
+            move = new MovementData { position= new Position(rx, ry, rz) },
+            //skill = new SkillData { a = true, b = false }
+        };
+
+        var bytes = MessagePackSerializer.Serialize(packet);
+        udp.SendAsync(bytes, bytes.Length, serverEndpoint);
     }
 
     private void ReceiveLoop(object? state)
@@ -56,34 +67,42 @@ public class PlayerNetwork : MonoBehaviour
             {
                 var remote = new IPEndPoint(IPAddress.Any, 0);
                 var bytes  = udp.Receive(ref remote);
-                var msg    = Encoding.UTF8.GetString(bytes);
-                HandleServerMsg(msg);
+
+                DataPacket? p = null;
+                try { p = MessagePackSerializer.Deserialize<DataPacket>(bytes); }
+                catch { Debug.LogWarning("Deserialize Error"); }
+                if (p == null)
+                {
+                    try
+                    {
+                        var dp = MessagePackSerializer.Deserialize<DataPacket>(bytes);
+                        p = new DataPacket() { id = dp.id, move = dp.move, skill = dp.skill };
+                    }
+                    catch { continue; }
+                }
+                if (p == null || string.IsNullOrEmpty(p.id)) continue;
+
+                if (p.move != null)
+                {
+                    var x = p.move.position.x; var y = p.move.position.y; var z = p.move.position.z;
+                    var pid = p.id;
+                    // Unity 오브젝트 업데이트는 메인 스레드에서 수행
+                    _mainThread.Enqueue(() =>
+                    {
+                        if (pid == playerId) return; // 자기 자신은 로컬에서 이미 반영
+                        var obj = GameObject.Find(pid); //todo: 로직 수정 필요
+                        if (obj != null) obj.transform.position = new Vector3(x, y, z);
+                    });
+                }
             }
         }
         catch (SocketException) { /* 종료시 */ }
     }
 
-    private void HandleServerMsg(string msg)
+
+    void OnDestroy()
     {
-        // 메시지 파싱
-        var parts = msg.Split(':');
-        if (parts.Length != 5 || parts[0] != "MOVE") return;
-
-        var id = parts[1];
-        var x  = float.Parse(parts[2]);
-        var y  = float.Parse(parts[3]);
-        var z  = float.Parse(parts[4]);
-
-        // 같은 클라이언트(내 자신) 인지 체크
-        if (id == playerId) return; // 이미 로컬에서 업데이트 함
-
-        // 다른 플레이어 위치 업데이트
-        // 여기서는 Scene 에 다른 GameObject가 존재한다고 가정
-        // 예시: FindByTag("OtherPlayer") + SetPosition
-        var obj = GameObject.Find(id);
-        if (obj != null)
-            obj.transform.position = new Vector3(x, y, z);
+        try { udp?.Close(); } catch { }
+        udp = null;
     }
-
-    void OnDestroy() => udp.Close();
 }
