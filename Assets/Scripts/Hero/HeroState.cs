@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class HeroState : MonoBehaviour
 {
-    //ÇÃ·¹ÀÌ¾î Á¤º¸ ¹× »óÅÂ¸¦ ´Ù·ç´Â ½ºÅ©¸³Æ®
+    //í”Œë ˆì´ì–´ ì •ë³´ ë° ìƒíƒœë¥¼ ë‹¤ë£¨ëŠ” ìŠ¤í¬ë¦½íŠ¸
 
 
-    //Á¤º¸
+    //ì •ë³´
     #region imformation
     public float hp;
     public float maxhp;
@@ -22,12 +22,13 @@ public class HeroState : MonoBehaviour
     #endregion
 
 
-    //»óÅÂ
+    //ìƒíƒœ
     #region state
     public bool canMove = true;
     public bool canAttack = true;
     public bool isJumping = false;
     public bool isOnGround = true;
-    public bool isInvincible = false; //¹«Àû »óÅÂÀÎÁö ¾Æ´ÑÁö¸¦ ³ªÅ¸³»´Â º¯¼ö
+    public bool isInvincible = false; //ë¬´ì  ìƒíƒœì¸ì§€ ì•„ë‹Œì§€ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜
+    public bool isMoving = false; 
     #endregion
 }
