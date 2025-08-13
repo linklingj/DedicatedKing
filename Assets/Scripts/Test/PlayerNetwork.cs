@@ -38,11 +38,7 @@ public class PlayerNetwork : MonoBehaviour
     {
         while (_mainThread.TryDequeue(out var work)) work();
         // 예시: 마우스 왼쪽 클릭시 이동
-        if (Input.GetMouseButton(0))
-        {
-            transform.position += moveSpeed * Time.deltaTime;
-            SendMove();
-        }
+        SendMove();
     }
 
     void SendMove()
