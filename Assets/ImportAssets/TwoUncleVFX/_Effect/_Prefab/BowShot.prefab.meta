@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f3f19d3049855344a9eedcbe122669ed
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302017
+  packageName: VFX Graph - Bow Shot
+  packageVersion: 1.0
+  assetPath: Assets/ImportAssets/TwoUncleVFX/_Effect/_Prefab/BowShot.prefab
+  uploadId: 707068
