@@ -10051,6 +10051,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillPrefab: {fileID: 5410280920818557942}
+  _groundMask:
+    serializedVersion: 2
+    m_Bits: 119
+  _raycastDistance: 2000
 --- !u!114 &5386996237232697582
 MonoBehaviour:
   m_ObjectHideFlags: 0

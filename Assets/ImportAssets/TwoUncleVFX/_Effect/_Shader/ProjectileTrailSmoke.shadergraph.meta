@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 0428c66d81264bd469d34172d674bcc9
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302017
+  packageName: VFX Graph - Bow Shot
+  packageVersion: 1.0
+  assetPath: Assets/ImportAssets/TwoUncleVFX/_Effect/_Shader/ProjectileTrailSmoke.shadergraph
+  uploadId: 707068

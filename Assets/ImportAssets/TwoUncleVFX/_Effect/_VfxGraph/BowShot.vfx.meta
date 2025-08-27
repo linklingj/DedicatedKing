@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 88256991d2b3894458d7502691fd2180
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302017
+  packageName: VFX Graph - Bow Shot
+  packageVersion: 1.0
+  assetPath: Assets/ImportAssets/TwoUncleVFX/_Effect/_VfxGraph/BowShot.vfx
+  uploadId: 707068

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 720b7d30846f9be48a6a0a201f564ee7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302017
+  packageName: VFX Graph - Bow Shot
+  packageVersion: 1.0
+  assetPath: Assets/ImportAssets/TwoUncleVFX/Settings/TwoUncleVFX_UniversalRenderPipelineGlobalSettings.asset
+  uploadId: 707068
