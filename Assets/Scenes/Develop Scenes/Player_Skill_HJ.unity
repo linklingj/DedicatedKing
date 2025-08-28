@@ -2886,6 +2886,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1517761214}
     - target: {fileID: 687808657953882715, guid: ac97737ddc797024dadc925c0975108c, type: 3}
+      propertyPath: _fireInterval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 687808657953882715, guid: ac97737ddc797024dadc925c0975108c, type: 3}
       propertyPath: _enemyLayer.m_Bits
       value: 128
       objectReference: {fileID: 0}
