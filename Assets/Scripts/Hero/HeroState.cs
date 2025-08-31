@@ -30,5 +30,6 @@ public class HeroState : MonoBehaviour
     public bool isOnGround = true;
     public bool isInvincible = false; //무적 상태인지 아닌지를 나타내는 변수
     public bool isMoving = false; 
+    public bool isDead = false;
     #endregion
 }
